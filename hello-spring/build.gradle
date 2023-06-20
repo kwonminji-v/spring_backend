@@ -4,12 +4,18 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
+<<<<<<< HEAD
 group = 'HelloWorld'
 version = '0.0.1-SNAPSHOT'
 
 java {
 	sourceCompatibility = '11'
 }
+=======
+group = 'hello'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+>>>>>>> 9943b6ba7a697cc2f9a4639cdf90a947da87e9e0
 
 repositories {
 	mavenCentral()
@@ -19,7 +25,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+<<<<<<< HEAD
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+=======
+>>>>>>> 9943b6ba7a697cc2f9a4639cdf90a947da87e9e0
 }
 
 tasks.named('test') {
