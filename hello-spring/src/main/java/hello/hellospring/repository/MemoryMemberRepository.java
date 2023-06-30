@@ -3,9 +3,11 @@ package hello.hellospring.repository;
 
 //작성한 코드가 제대로 작동하는 기능인지 실행해서 테스트 할 때 , 테스트 케이스를 이용합니다. java는 JUnit이라는 프레임워크로 테스트를 실행해서 문제를 해결합니다.
 import hello.hellospring.domain.Member;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
+@Repository
 public class MemoryMemberRepository implements MemberRepository {
 
 

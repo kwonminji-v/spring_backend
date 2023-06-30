@@ -2,7 +2,8 @@ package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemoryMemberRepository;
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -10,9 +11,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MemberServiceTest {
 
-    MemberService memberService = new MemberService();
-    MemoryMemberRepository memberRepository = new MemoryMemberRepository();
+    MemberService memberService;
+    MemoryMemberRepository memberRepository;
 
+
+
+    @BeforeEach
+    public void beforeEach() {
+        //각 test들을 실행하기전에 MemoryMemberRepository를 만들어두고
+        memberRepository = new MemoryMemberRepository();
+        memberService = new MemberService(memberRepository);
+    }
+
+    @AfterEach
     public void afterEach(){
         memberRepository.clearStore();
     }
@@ -26,7 +37,7 @@ class MemberServiceTest {
         Member member = new Member();
         member.setName("hello");
 
-        //when : 해당 상황을 실행했을 때
+        //when : 해당 상황을 실행했을 때 (memberService의 join 메서드를 검증)
         Long saveId = memberService.join(member);
 
         //then(검증부) : 여기 결과가 주어지도록 코드를 작성한다.
