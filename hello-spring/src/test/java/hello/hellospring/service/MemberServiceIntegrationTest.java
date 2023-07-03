@@ -2,15 +2,16 @@ package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
-import hello.hellospring.repository.MemoryMemberRepository;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
+@Transactional
 class MemberServiceIntegrationTest {
 
     @Autowired MemberService memberService;
@@ -25,7 +26,7 @@ class MemberServiceIntegrationTest {
 
         //given(어떤데이터) : 테스트 코드를 작성할 땐 어떠한 상황에 주어지는데
         Member member = new Member();
-        member.setName("hello");
+        member.setName("spring!!");
 
         //when : 해당 상황을 실행했을 때 (memberService의 join 메서드를 검증)
         Long saveId = memberService.join(member);
@@ -42,7 +43,6 @@ class MemberServiceIntegrationTest {
         Member member1 = new Member();
         member1.setName("Spring");
 
-        //저장되는 이름의 값이 같은 상황에서 join을 두번 했을 때, validate에서 검증되어 이미 존재하는 회원이기 때문에 터지게 됩니다.
         Member member2 = new Member();
         member2.setName("Spring");
 
@@ -55,15 +55,8 @@ class MemberServiceIntegrationTest {
         assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
 
 
-
         //then
     }
 
-    @Test
-    void findMembers() {
-    }
 
-    @Test
-    void findOne() {
-    }
 }

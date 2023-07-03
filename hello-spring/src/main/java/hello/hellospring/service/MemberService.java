@@ -5,11 +5,12 @@ import hello.hellospring.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-
+@Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -28,13 +29,15 @@ public class MemberService {
      * 회원 가입
      */
     public Long join(Member member) {
+
         //같은 이름이 있는 중복회원은 안되는 코드를 작성
         validateDuplicateMember(member);
         //findByName을 했는데, 만약 그 결과가 optional 멤버니깐 바로 ifPresent메서드로 검사.
         //Optional로 감싸서 작성했기 때문에 가능합니다. optional안의 여러 메서드를 사용할 수 있습니다.
         memberRepository.save(member);
         return member.getId();
-    }
+
+        }
 
     private void validateDuplicateMember (Member member) {
         memberRepository.findByName(member.getName())
