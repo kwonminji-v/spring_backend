@@ -19,4 +19,13 @@ public class MemberServiceTest {
         //then
         Assertions.assertThat(member).isEqualTo(findMember);
     }
+
+    @Test
+    void findId() {
+        //given
+
+        //when
+
+        //then
+    }
 }

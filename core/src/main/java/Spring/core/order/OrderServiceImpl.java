@@ -1,6 +1,5 @@
 package Spring.core.order;
 import Spring.core.discount.DiscountPolicy;
-import Spring.core.discount.FixDiscountPolicy;
 import Spring.core.member.Member;
 import Spring.core.member.MemberRepository;
 import Spring.core.member.MemoryMemberRepository;
@@ -11,8 +10,11 @@ import Spring.core.member.MemoryMemberRepository;
 public class OrderServiceImpl implements OrderService{
 
     private final MemberRepository memberRepository = new MemoryMemberRepository();
-    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    //private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    //private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
 
+    private DiscountPolicy discountPolicy;
+    //선언을 위와같이만 변경해준다면, 인터페이스에만 의존하게 되므로
 
     //주문을 만들어서 반환을 해주면 해당 파일의 실행이 종료됨
     @Override

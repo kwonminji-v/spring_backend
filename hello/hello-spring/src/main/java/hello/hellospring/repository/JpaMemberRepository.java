@@ -2,7 +2,6 @@ package hello.hellospring.repository;
 
 import hello.hellospring.domain.Member;
 import org.hibernate.annotations.common.reflection.XMember;
-
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +11,6 @@ public class JpaMemberRepository  implements MemberRepository {
     //jpa는 EntityManager로 모든 동작이 진행됩니다.
     //jpa 라이브러리를 다운받으면서 EntityManager를 자동으로 생성
     private final EntityManager em;
-
     public JpaMemberRepository(EntityManager em) {
         this.em = em;
     }

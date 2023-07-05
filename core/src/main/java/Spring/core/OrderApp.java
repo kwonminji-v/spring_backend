@@ -22,9 +22,9 @@ public class OrderApp {
         Member member = new Member(memberId, "memberA", Grade.VIP);
         memberService.join(member);
 
-        OrderDTO itemA = orderService.createOrder(memberId, "itemA", 10000);
+        OrderDTO order = orderService.createOrder(memberId, "itemA", 10000);
 
-        System.out.println("itemA = " + itemA);
+        System.out.println("order = " + order);
     }
 
 }
