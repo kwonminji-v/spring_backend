@@ -1,4 +1,6 @@
 package Spring.core.order;
+import Spring.core.discount.DiscountPolicy;
+import Spring.core.member.MemberRepository;
 import org.springframework.core.annotation.Order;
 
 
@@ -7,6 +9,7 @@ import org.springframework.core.annotation.Order;
 
 //1. 주문 생성
 public interface OrderService {
+
 
     OrderDTO createOrder(Long memberId, String itemName, int itemPrice);
 

@@ -13,9 +13,9 @@ public class OrderApp {
 
     public static void main(String[] args) {
 
-        //MemberService 와 OrderSercive 객체를 생성
-        MemberService memberService = new MemberServiceImple();
-        OrderService orderService = new OrderServiceImpl();
+        AppConfig appConfig = new AppConfig();
+        MemberService memberService = appConfig.memberService();
+        OrderService orderService = appConfig.orderService();
 
         //memberId를 1로 선언하고 만든 후, Member 객체에 매개변수 id , name , grade를 전달
         Long memberId = 1L;

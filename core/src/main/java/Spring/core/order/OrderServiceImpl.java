@@ -1,22 +1,24 @@
 package Spring.core.order;
 import Spring.core.discount.DiscountPolicy;
+import Spring.core.discount.RateDiscountPolicy;
 import Spring.core.member.Member;
 import Spring.core.member.MemberRepository;
-import Spring.core.member.MemoryMemberRepository;
 
 
 //OrderService 인터페이스를 구현해 줄 코드!
 //OrderService는 DisCountPolicy가 변경되더라도 아무런 영향을 받지 않음
 public class OrderServiceImpl implements OrderService{
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-    //private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
-    //private final DiscountPolicy discountPolicy = new RateDiscountPolicy();
+    //인터페이스에만 의존하도록 수정되어 DIP를 지킬 수 있음
+    private final DiscountPolicy discountPolicy;
+    private final MemberRepository memberRepository;
 
-    private DiscountPolicy discountPolicy;
-    //선언을 위와같이만 변경해준다면, 인터페이스에만 의존하게 되므로
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy ) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
 
-    //주문을 만들어서 반환을 해주면 해당 파일의 실행이 종료됨
+    }
+
     @Override
     public OrderDTO createOrder(Long memberId, String itemName, int itemPrice) {
         Member member = memberRepository.findById(memberId);
