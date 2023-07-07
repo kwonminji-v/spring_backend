@@ -39,7 +39,7 @@ public class SpringConfig {
 //    public MemberRepository memberRepository() {
 //        //return new MemoryMemberRepository();
         //return new JdbcMemberRepository(dataSource);
-//        //return new JpaMemberRepository(em);
+        //return new JpaMemberRepository(em);
 //        return
 //    }
 
