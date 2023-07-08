@@ -1,11 +1,10 @@
 package Spring.core;
 
 import Spring.core.discount.DiscountPolicy;
-import Spring.core.discount.FixDiscountPolicy;
 import Spring.core.discount.RateDiscountPolicy;
 import Spring.core.member.MemberRepository;
 import Spring.core.member.MemberService;
-import Spring.core.member.MemberServiceImple;
+import Spring.core.member.MemberServiceImpl;
 import Spring.core.member.MemoryMemberRepository;
 import Spring.core.order.OrderService;
 import Spring.core.order.OrderServiceImpl;
@@ -18,7 +17,7 @@ public class AppConfig {
     @Bean
     //↓ 클라이언트 (주문생성 -회원 ID)
     public MemberService memberService() {
-        return new MemberServiceImple(memberRepository());
+        return new MemberServiceImpl(memberRepository());
     }
     @Bean
     //↓ 회원 저장소 역할 (메모리 회원 저장소 / DB 회원 저장소)

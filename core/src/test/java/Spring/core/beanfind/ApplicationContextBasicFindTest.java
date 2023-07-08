@@ -2,8 +2,7 @@ package Spring.core.beanfind;
 
 import Spring.core.AppConfig;
 import Spring.core.member.MemberService;
-import Spring.core.member.MemberServiceImple;
-import org.assertj.core.api.Assertions;
+import Spring.core.member.MemberServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
@@ -22,7 +21,7 @@ public class ApplicationContextBasicFindTest {
         MemberService memberService = ac.getBean("memberService", MemberService.class);
             System.out.println("memberService = " + memberService);
             System.out.println("memberService = " + memberService.getClass());
-            assertThat(memberService).isInstanceOf(MemberServiceImple.class);
+            assertThat(memberService).isInstanceOf(MemberServiceImpl.class);
 
         }
 
@@ -30,14 +29,14 @@ public class ApplicationContextBasicFindTest {
         @DisplayName("이름없이 타입으로만 조회해보기")
         void findBeanByType () {
         MemberService memberService = ac.getBean( MemberService.class);
-            assertThat(memberService).isInstanceOf(MemberServiceImple.class);
+            assertThat(memberService).isInstanceOf(MemberServiceImpl.class);
         }
 
     @Test
     @DisplayName("구체 타입 이름으로 조회")
     void findBeanByName2 () {
-        MemberServiceImple memberService = ac.getBean("memberService", MemberServiceImple.class);
-        assertThat(memberService).isInstanceOf(MemberServiceImple.class);
+        MemberServiceImpl memberService = ac.getBean("memberService", MemberServiceImpl.class);
+        assertThat(memberService).isInstanceOf(MemberServiceImpl.class);
 
     }
 

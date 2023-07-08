@@ -3,10 +3,8 @@ package Spring.core;
 import Spring.core.member.Grade;
 import Spring.core.member.Member;
 import Spring.core.member.MemberService;
-import Spring.core.member.MemberServiceImple;
 import Spring.core.order.OrderDTO;
 import Spring.core.order.OrderService;
-import Spring.core.order.OrderServiceImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
