@@ -26,4 +26,8 @@ public class OrderServiceImpl implements OrderService{
 
         return new OrderDTO(memberId, itemName, itemPrice, discountPrice);
     }
+    //Test 용도
+    public MemberRepository getMemberRepository() {
+        return memberRepository;
+    }
 }
