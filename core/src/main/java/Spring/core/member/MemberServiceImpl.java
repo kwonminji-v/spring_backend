@@ -1,7 +1,11 @@
 package Spring.core.member;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 //MemberServiceImple은 MemberServie 인터페이스를 상속받아 구현
+@Component
 public class MemberServiceImpl implements MemberService{
 
 
@@ -10,6 +14,7 @@ public class MemberServiceImpl implements MemberService{
 
     //생성자를 통해 MemberRepository 구현체를 주입 받는다.(의존성 주입)
     //런타임에 구체적인 MemberRepository 객체 제공이 가능
+    @Autowired //같은 의미 = (ac.getBean(MemberRepository.class)) : 의존관계 저동으로 주입!
     public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
