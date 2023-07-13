@@ -1,6 +1,5 @@
 package Spring.core.order;
 import Spring.core.discount.DiscountPolicy;
-import Spring.core.discount.RateDiscountPolicy;
 import Spring.core.member.Member;
 import Spring.core.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;

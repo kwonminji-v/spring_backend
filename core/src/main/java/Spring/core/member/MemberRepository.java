@@ -1,7 +1,5 @@
 package Spring.core.member;
 
-import Spring.core.discount.DiscountPolicy;
-
 public interface MemberRepository {
 
 
