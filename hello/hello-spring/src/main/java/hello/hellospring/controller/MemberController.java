@@ -15,6 +15,8 @@ import java.util.List;
 @Controller
 public class MemberController {
 
+	//Autowired랑 final의 차이 알아보기	
+
     private final MemberService memberService;
 
     @Autowired
