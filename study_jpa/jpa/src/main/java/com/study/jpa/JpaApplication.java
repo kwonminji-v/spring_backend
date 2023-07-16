@@ -41,25 +41,6 @@ public class JpaApplication {
 			em.clear();
 
 			System.out.println("==============시작==============");
-			//Member findMember = em.find(Member.class, member.getId());
-
-			//ex. 도시1에서 도시2로 이사감
-			//아래와 같은 방식은 사용하면 XX
-			//findMember.getHomeAddress().setCity("도시2");
-/*			Address address = findMember.getHomeAddress();
-			findMember.setHomeAddress(new Address("도시2",address.getStreet(),address.getZipcode()
-			));
-
-			//컬렉션내부의 치킨을 -> 떡볶이로 변경
-			findMember.getFavoriteFoods().remove("치킨");
-			findMember.getFavoriteFoods().add("떡볶이");*/
-
-			//주소지를 변경해보자
-//			findMember.getAddressHistory().remove(new AddressEntity("이전도시", "이전길거리", "이전번지"));
-//			findMember.getAddressHistory().add(new AddressEntity("새도시1","새길거리","새번지"));
-//
-//			System.out.println("findMember = " + findMember);
-
 
 			tx.commit();
 			
