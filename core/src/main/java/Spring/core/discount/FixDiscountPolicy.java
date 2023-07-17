@@ -2,9 +2,11 @@ package Spring.core.discount;
 
 import Spring.core.member.Grade;
 import Spring.core.member.Member;
+import org.springframework.stereotype.Component;
 
 
 //DisCountPolicy를 구현 받는 구현체인 FixDisCountPolicy 클래스를 생성
+/*@Component*/
 public class FixDiscountPolicy implements DiscountPolicy {
 
     //정액할인으로 무조건 1000원만 할인해주는 조건을 작성
