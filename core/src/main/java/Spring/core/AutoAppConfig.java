@@ -1,9 +1,6 @@
 package Spring.core;
 
 
-import Spring.core.member.MemberRepository;
-import Spring.core.member.MemoryMemberRepository;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
@@ -13,9 +10,6 @@ import org.springframework.context.annotation.FilterType;
 
 @Configuration
 @ComponentScan(
-        //
-        basePackages = "Spring.core.member",
-        basePackageClasses = AutoAppConfig.class,
         excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = Configuration.class)
         //Configuration이 Componentscan 기능을 가지고 있기 때문에 Configuration.class는 자동으로 불러와지지 않도록 설정
 )
