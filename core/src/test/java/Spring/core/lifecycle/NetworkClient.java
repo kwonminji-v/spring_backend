@@ -1,6 +1,6 @@
 package Spring.core.lifecycle;
 
-public class NetworkClient {
+public class NetworkClient{
 
     private String url;
 
@@ -28,5 +28,20 @@ public class NetworkClient {
     //서비스 종료 시 호출될 메서드 (안전한 서비스 종료)
     public void disconnect() {
         System.out.println("disconnect 호출 시 close : " + url);
+    }
+
+    //싱글톤 빈이기 때문에 스프링 컨테이너에 등록될 때 , 생성이 됨
+    //의존관계주입이 끝나면 (afterPropertiesSet이 의미) connect와 Call을 호출
+
+    public void init() {
+        System.out.println("NetworkClient.init");
+        connect();
+        call("초기 연결 메세지");
+    }
+
+
+    public void close() {
+        System.out.println("NetworkClient.close" );
+        disconnect();
     }
 }
