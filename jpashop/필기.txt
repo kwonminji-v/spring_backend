@@ -1,0 +1,97 @@
+------------------- 07.19 @Entity 어노테이션  ------------------------------
+@Entity 어노테이션은 JPA(Java Persistence API)에서 엔티티 클래스를 나타내는 데 사용되는 어노테이션입니다.
+엔티티 클래스는 데이터베이스와 매핑되는 객체를 의미하며, JPA를 사용하여 데이터베이스와 상호작용하는데 필요한 정보를 제공합니다.
+@Entity 어노테이션을 클래스에 붙이면 해당 클래스가 JPA 엔티티임을 나타냅니다.
+JPA는 @Entity 어노테이션이 붙은 클래스를 데이터베이스의 테이블과 매핑하여 객체를 영구 저장소에 저장하고 관리합니다.
+@Entity 어노테이션의 주요 특징은 다음과 같습니다:
+
+JPA에서 관리하는 엔티티 클래스는 반드시 @Entity 어노테이션이 붙어야 합니다.
+@Entity 어노테이션이 붙은 클래스는 JPA의 영속성 컨텍스트에서 관리되며, 데이터베이스와 매핑되는 역할을 수행합니다.
+@Entity 어노테이션을 사용하는 클래스는 기본 생성자가 반드시 필요하며, 파라미터가 없는 기본 생성자를 갖고 있어야 합니다.
+@Entity 어노테이션을 사용하여 JPA 엔티티 클래스를 정의하면, JPA는 해당 클래스와 연결된 데이터베이스 테이블을 자동으로 생성하고,
+엔티티의 상태를 추적하고, 영속성 컨텍스트를 통해 엔티티를 관리하는 등의 기능을 제공합니다.
+
+
+------------------- 07.19 @Embeddable & @Embedded ------------------------------
+
+@Embeddable과 @Embedded는 스프링 부트에서 JPA를 사용할 때 엔티티 클래스의 속성을 재사용하거나 복합적인 값으로 표현하기 위해 사용되는 어노테이션입니다.
+
+@Embeddable : @Embeddable 어노테이션은 복합적인 값(Composite Value)을 표현하기 위해 사용되는 클래스에 지정됩니다. 즉, 해당 클래스가 다른 엔티티에 속성으로 포함되어 사용될 수 있음을 나타냅니다.
+예를 들어, 주소 정보를 여러 엔티티에서 공통으로 사용해야 할 경우 @Embeddable 어노테이션을 사용하여 Address 클래스를 정의하고, 해당 엔티티들의 속성으로 Address 클래스를 사용할 수 있습니다.
+
+@Embeddable
+public class Address {
+    private String city;
+    private String street;
+    private String zipCode;
+
+    // getters, setters, constructors, etc.
+}
+
+@Embedded : @Embedded 어노테이션은 @Embeddable 어노테이션이 지정된 클래스를 해당 엔티티의 속성으로 포함시킬 때 사용됩니다.
+엔티티 클래스의 속성으로 @Embedded 어노테이션을 사용하여 @Embeddable 어노테이션이 지정된 클래스를 포함시킵니다.
+
+@Entity
+public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+
+    @Embedded
+    private Address address;
+
+    // getters, setters, constructors, etc.
+}
+위의 예시에서 Customer 엔티티는 Address 클래스를 속성으로 포함하고 있으며, 이렇게 함으로써 Customer 엔티티의 데이터베이스 테이블에 city, street, zipCode 속성들이
+컬럼으로 포함됩니다. 이러한 방식으로 코드의 재사용성을 높이고, 복합적인 값들을 관리하기 쉽게 할 수 있습니다.
+
+
+-------------------- 07.19 Entity 클래스들간의 관계를 나타낼 때 사용되는 어노테이션 -----------------------------------
+
+@OneToOne: 일대일(One-to-One) 관계를 표현할 때 사용됩니다. 두 개의 엔티티 클래스가 서로 하나의 관계를 맺는 경우에 사용합니다.
+@OneToMany: 일대다(One-to-Many) 관계를 표현할 때 사용됩니다. 하나의 엔티티가 다수의 다른 엔티티와 관계를 맺는 경우에 사용합니다.
+@ManyToOne: 다대일(Many-to-One) 관계를 표현할 때 사용됩니다. 다수의 엔티티가 하나의 다른 엔티티와 관계를 맺는 경우에 사용합니다.
+@ManyToMany: 다대다(Many-to-Many) 관계를 표현할 때 사용됩니다. 여러 엔티티가 여러 다른 엔티티들과 서로 다대다 관계를 맺을 때 사용합니다.
+
+mappedBy는 JPA에서 양방향(두 엔티티 간에 서로 참조하는) 관계를 매핑할 때 사용되는 속성입니다. mappedBy는 일반적으로 @OneToMany와 @OneToOne 어노테이션에서 사용됩니다.
+양방향 관계를 설정할 때, 일반적으로 한 쪽의 엔티티(주인 엔티티)가 다른 쪽의 엔티티(역방향 엔티티)를 참조하도록 매핑을 지정합니다.
+이 때 mappedBy를 사용하여 역방향 엔티티가 어떤 필드를 통해 주인 엔티티와 매핑되었는지를 지정합니다.
+
+예를 들어, 다음과 같이 Post 엔티티와 Comment 엔티티가 있을 때, Post 엔티티가 Comment 엔티티를 일대다 관계로 참조하고 있습니다.
+
+java
+Copy code
+@Entity
+public class Post {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String title;
+
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
+
+    // Getters, setters, constructors, etc.
+}
+
+@Entity
+public class Comment {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String text;
+
+    @ManyToOne
+    private Post post;
+
+    // Getters, setters, constructors, etc.
+}
+위의 예시에서 Post 엔티티에서 comments 필드에 @OneToMany(mappedBy = "post") 어노테이션을 사용했습니다.
+이렇게 함으로써 Comment 엔티티의 post 필드가 Post 엔티티의 comments 필드를 참조하도록 매핑되었다고 지정합니다. 따라서 양방향으로 관계를 설정할 수 있습니다.
+
+mappedBy는 엔티티 관계에서 중요한 개념이며, 엔티티 간의 관계를 정확하게 설정하기 위해 잘 이해하고 사용하는 것이 중요합니다.
+
+이러한 어노테이션들을 사용하여 엔티티 클래스들 간의 관계를 설정하고, 데이터베이스에서 이를 올바르게 매핑할 수 있습니다.
