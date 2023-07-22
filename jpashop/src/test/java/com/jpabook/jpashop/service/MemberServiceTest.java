@@ -2,6 +2,7 @@ package com.jpabook.jpashop.service;
 
 import com.jpabook.jpashop.domain.Member;
 import com.jpabook.jpashop.repository.MemberRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,10 +25,12 @@ public class MemberServiceTest {
         member.setName("JUNG");
 
         //when
+        Long saveId = memberService.join(member);
+
 
 
         //then
-
+        assertEquals(member, memberRepository.findOne(saveId));
     }
 
     @Test
