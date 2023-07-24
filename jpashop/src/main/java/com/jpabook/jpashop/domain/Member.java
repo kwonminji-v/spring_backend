@@ -9,8 +9,7 @@ import java.util.List;
 
 //JPA를 이용하여 DB와 연동할 수 있는 Entity클래스 Member 생성
 @Entity //JPA Entity임을 표시하는 어노테이션
-@Getter
-@Setter
+@Getter @Setter
 public class Member {
 
     @Id  //아래에 선언된 id 변수를 기본키로 사용한다는 의미의 어노테이션

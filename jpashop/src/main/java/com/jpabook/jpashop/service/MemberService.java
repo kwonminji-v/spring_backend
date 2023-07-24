@@ -3,6 +3,7 @@ package com.jpabook.jpashop.service;
 
 import com.jpabook.jpashop.domain.Member;
 import com.jpabook.jpashop.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,12 +12,14 @@ import java.util.List;
 
 @Service
 @Transactional //JPA의 모든 데이터 변경이나 로직은 가급적 Transactional 안에서 실행되어야 함 (
+@RequiredArgsConstructor
 public class MemberService {
 
-    @Autowired
-    private MemberRepository memberRepository;
+
+    private final MemberRepository memberRepository;
 
     /**회원 가입 save() - 중복회원검증도 같이 작성해보기*/
+    @Transactional
     public Long join(Member member) {
 
         validateDuplicateMember(member); //중복 회원 검증 검증 후 문제가 없다면 save가 실행되고, return 값으로 해당 id를 member에 전달
@@ -36,6 +39,7 @@ public class MemberService {
 
 
     //회원 전체 조회 findAll()
+
     public List<Member> findAllMembers() {
         return memberRepository.findAll();
     }
