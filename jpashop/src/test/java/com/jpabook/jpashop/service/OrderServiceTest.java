@@ -5,8 +5,6 @@ import com.jpabook.jpashop.domain.Member;
 import com.jpabook.jpashop.domain.Order;
 import com.jpabook.jpashop.domain.OrderStatus;
 import com.jpabook.jpashop.item.Book;
-import com.jpabook.jpashop.repository.ItemRepository;
-import com.jpabook.jpashop.repository.MemberRepository;
 import com.jpabook.jpashop.repository.OrderRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
@@ -50,8 +48,6 @@ class OrderServiceTest {
         assertEquals(OrderStatus.ORDER,getOrder.getStatus(),"상품 주문 시 상태는 ORDER");
         assertEquals(1,getOrder.getOrderItems().size(),"주문한 상품의 종류 수가 정확해야 한다.");
         assertEquals(10000*orderCount,getOrder.getTotalPrice(),"주문 가격은 가격 * 수량이다");
+        assertEquals(10,book.getStockQuantity(),"주문 수량 만큼 재고가 줄어야한다");
     }
-
-
-
 }
