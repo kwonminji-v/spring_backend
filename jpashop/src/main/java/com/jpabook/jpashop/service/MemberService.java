@@ -16,7 +16,7 @@ public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
-    //회원 가입 save() - 중복회원검증도 같이 작성해보기
+    /**회원 가입 save() - 중복회원검증도 같이 작성해보기*/
     public Long join(Member member) {
 
         validateDuplicateMember(member); //중복 회원 검증 검증 후 문제가 없다면 save가 실행되고, return 값으로 해당 id를 member에 전달
@@ -27,7 +27,6 @@ public class MemberService {
     //기본적인 중복값 검증을 위한 메서드
     private void validateDuplicateMember(Member member) {
         //예외 처리가 필요
-
         List<Member> findMembers = memberRepository.findByName(member.getName());
         //만약 가입된 멤버가 아니면 (비어있는 값이 아니라면) 이미 존재하는 회원이라는 예외처리 진행
         if (!findMembers.isEmpty()) {

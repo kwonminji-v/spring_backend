@@ -160,6 +160,24 @@ public class MyService {
 위의 예제에서 saveData() 메서드는 @Transactional 어노테이션을 가지고 있으므로, 해당 메서드를 호출할 때 자동으로 트랜잭션이 시작되고,
 메서드 수행이 완료되면 트랜잭션은 커밋됩니다. 만약 메서드 수행 중에 예외가 발생하면 트랜잭션은 롤백됩니다.
 
+
+Spring 프레임워크에서 데이터베이스와 관련된 작업을 처리할 때 커밋(Commit)과 롤백(Rollback)은 중요한 개념입니다.
+이들은 데이터베이스 트랜잭션(Transaction)의 일부로서, 여러 데이터베이스 작업들을 논리적인 단위로 묶고, 작업의 원자성, 일관성, 격리성, 지속성(ACID)을 보장합니다.
+Spring은 트랜잭션 관리를 지원하기 위해 여러 방법을 제공합니다.
+
+커밋 (Commit):
+
+커밋은 트랜잭션의 성공적인 완료를 의미합니다.
+데이터베이스에 수행한 모든 변경 사항이 영구적으로 저장되고, 트랜잭션은 종료됩니다.
+트랜잭션 내의 모든 작업들이 정상적으로 처리되었을 때 커밋을 수행합니다.
+커밋을 호출하면 트랜잭션의 변경 내용이 영구적으로 반영되며, 이후의 변경 사항은 롤백으로 취소할 수 없습니다.
+
+롤백 (Rollback):
+
+롤백은 트랜잭션의 실패 또는 명시적인 취소를 의미합니다.
+트랜잭션 내의 작업 중 하나라도 실패하거나, 예외가 발생하면 해당 트랜잭션은 롤백됩니다.
+롤백을 호출하면 트랜잭션 내의 모든 변경 사항이 취소되고, 데이터베이스는 이전 상태로 돌아갑니다.
+
 ------------------------ 07-21   @RequiredArgsConstructor 어노테이션 -----------------------------------------
 @RequiredArgsConstructor는 Lombok 라이브러리에서 제공하는 애노테이션으로, 주로 생성자를 자동으로 생성해주는 기능을 제공합니다.
 
@@ -172,7 +190,8 @@ final 키워드가 붙은 필드를 가진 클래스: @RequiredArgsConstructor�
 따라서 @RequiredArgsConstructor를 사용하면 널 값이 아닌 필드를 가진 생성자가 자동으로 생성됩니다.
 
 ------------------------ 07-22 영속화(persist) --------------------------------------
-영속화(persist)는 JPA에서 엔티티 객체를 영구 저장소(데이터베이스)에 저장하는 과정을 의미합니다. JPA에서 영속성 컨텍스트(Persistence Context)라는 개념을 사용하여 엔티티 객체의 상태를 관리하며, 영속성 컨텍스트에 포함된 엔티티 객체는 데이터베이스에 반영됩니다.
+영속화(persist)는 JPA에서 엔티티 객체를 영구 저장소(데이터베이스)에 저장하는 과정을 의미합니다.
+JPA에서 영속성 컨텍스트(Persistence Context)라는 개념을 사용하여 엔티티 객체의 상태를 관리하며, 영속성 컨텍스트에 포함된 엔티티 객체는 데이터베이스에 반영됩니다.
 
 영속화는 일반적으로 다음과 같은 방법으로 수행됩니다:
 
@@ -184,3 +203,54 @@ final 키워드가 붙은 필드를 가진 클래스: @RequiredArgsConstructor�
 또한, 영속 상태의 엔티티는 캐싱되어서 동일한 엔티티에 대한 여러 조회 작업에 대한 성능을 향상시킬 수 있습니다.
 
 반대로 영속 상태의 엔티티를 영속성 컨텍스트에서 분리하거나, 데이터베이스에서 삭제하려면 detach() 또는 remove() 메서드를 사용하여 분리하거나 삭제할 수 있습니다.
+
+------------------------ 07-24 em.persist --------------------------------------
+
+em.persist()는 JPA(Entity Manager)에서 엔티티를 영속성 컨텍스트에 저장(추가)하는 메서드입니다. JPA에서 영속성 컨텍스트는 엔티티의 생명주기를 관리하며,
+em.persist()를 사용하여 엔티티를 영속성 컨텍스트에 추가하면 해당 엔티티가 데이터베이스에 반영될 수 있도록 준비됩니다.
+
+em.persist() 메서드를 사용하는 방법은 다음과 같습니다:
+
+엔티티 클래스 정의: 먼저 JPA에서 관리하고자 하는 엔티티 클래스를 정의합니다. 엔티티 클래스는 @Entity 어노테이션으로 표시되어야 합니다.
+
+@Entity
+public class Member {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+
+    // Getter, Setter, 기타 메서드들
+    // ...
+}
+
+엔티티 매니저 주입: em.persist()를 사용하려면 EntityManager를 주입받아야 합니다. 스프링 기반 애플리케이션에서는 @Autowired 등을 사용하여 EntityManager를 주입받을 수 있습니다.
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+@Service
+public class MemberService {
+
+    @PersistenceContext
+    private EntityManager em;
+
+    // 이후 엔티티 매니저를 사용하는 서비스 로직 작성
+    // ...
+}
+엔티티 저장: em.persist()를 사용하여 엔티티를 영속성 컨텍스트에 저장(추가)합니다.
+
+@Service
+public class MemberService {
+    @PersistenceContext
+    private EntityManager em;
+
+    public void saveMember(Member member) {
+        em.persist(member); // 엔티티를 영속성 컨텍스트에 추가
+    }
+}
+위의 saveMember() 메서드에서 em.persist(member)를 호출하면 member 엔티티가 영속성 컨텍스트에 추가됩니다.
+이후 @Transactional 어노테이션과 같이 사용하여 트랜잭션 범위에서 커밋되면, 영속성 컨텍스트에 있는 엔티티가 데이터베이스에 반영되게 됩니다.
+
+참고로, em.persist()를 호출한 후에 바로 데이터베이스에 저장되지 않습니다. JPA에서는 트랜잭션을 커밋하는 시점에 영속성 컨텍스트에 있는 변경 내용을 데이터베이스에 동기화합니다.
+따라서 em.persist()를 호출하더라도 해당 엔티티는 데이터베이스에 반영되지 않을 수 있습니다. 영속성 컨텍스트와 트랜잭션의 동작 방식을 이해하는 것이 중요합니다.
