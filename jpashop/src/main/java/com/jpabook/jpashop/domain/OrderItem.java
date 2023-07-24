@@ -25,4 +25,14 @@ public class OrderItem {
     private int orderPrice; //주문 당시 가격
     private int count;      //주문 당시 수량
 
+    // ==== 비즈니스 로직을 작성 ====
+    /**
+     * 재고수량 원복 : cancel 메서드는 Item을 가져와서 재고를 주문 수량 만큼 눌려줘야 함 */
+    public void cancel() {
+        getItem().addStock(count);
+    }
+
+    public int getTotalPrice() {
+        return 0;
+    }
 }
