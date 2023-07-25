@@ -40,7 +40,7 @@ public class MemberService {
 
     //회원 전체 조회 findAll()
 
-    public List<Member> findAllMembers() {
+    public List<Member> findMembers() {
         return memberRepository.findAll();
     }
 

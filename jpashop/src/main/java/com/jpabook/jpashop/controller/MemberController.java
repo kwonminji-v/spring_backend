@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
@@ -33,7 +35,7 @@ public class MemberController {
     @PostMapping("/members/new")
     /* 매개변수로 받아올 MemberForm 앞에 @Valid 어노테이션을 작성해주면, MemberForm에 작성된 @NotEmpty 등 validation과 관련된 어노테이션을 인식함
     * 회원 이름이 필수 값으로 입력되어야하는 제약 조건을 정해주기 위해 @Valid 조건 */
-    public String create(@Valid MemberForm form, BindingResult result) {
+    public String create(@Valid MemberForm form, BindingResult result) { // BindingResult에 에러 확인이 가능함
 
         /** 이름을 입력하지 않은 채로 submit하게 되면 MemberForm에 NotEmpty 메세지로 적어두었던 message가 출력되고
          * post메서드로 전송시도는 되었으나, 다시 createMemberForm으로 돌아가게 됨*/
@@ -50,4 +52,17 @@ public class MemberController {
         memberService.join(member);
         return "redirect:/";
     }
+
+    /** MemberServiec에 만들어진 findMembers 메서드를 이용해 모든 멤버를 조회하고 가져온 후, members에 담음
+     *  model에 addAttribute로 key : "members" , value : members (List)를 꺼낼 수 있도록 작성 */
+    @GetMapping("/members")
+    public String list(Model model) {
+        model.addAttribute("members", memberService.findMembers());
+        //아래의 코드를 위의 코드로 인라인화 (1줄로) 작성할 수 있다. 단축키 ctrl+alt+n
+        /*
+        List<Member> members = memberService.findMembers();
+        model.addAttribute("members", members); */
+        return "members/memberList";
+    }
+
 }
