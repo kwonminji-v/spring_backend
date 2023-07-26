@@ -28,52 +28,44 @@ public class OrderRepository {
     }
 
     public List<Order> findAllByString(OrderSearch orderSearch) {
-
-
-   /** Order를 조회하고, order와 member를 join 하는 쿼리문을 작성 (테이블로 표현해야 하는 것을 객체로 표현) */
-        String jpql = "select o from Order o join o.member m";
+        //language=JPAQL
+        String jpql = "select o From Order o join o.member m";
         boolean isFirstCondition = true;
-
-        /** 주문 상태 검색 */
-        if (orderSearch.getOrderStatus() != null) { //주문 상태가 null 값이 아니면 where나 and를 붙여줌
+        //주문 상태 검색
+        if (orderSearch.getOrderStatus() != null) {
             if (isFirstCondition) {
-                jpql += "where";
+                jpql += " where";
                 isFirstCondition = false;
             } else {
-                jpql += "and";
+                jpql += " and";
             }
-            jpql += "o.status = :status"; //
+            jpql += " o.status = :status";
         }
-
-        /** 회원 이름 검색 */
+        //회원 이름 검색
         if (StringUtils.hasText(orderSearch.getMemberName())) {
             if (isFirstCondition) {
-                jpql += "where";
+                jpql += " where";
                 isFirstCondition = false;
             } else {
-                jpql += "and";
+                jpql += " and";
             }
-            jpql += "m.name like :name";
+            jpql += " m.name like :name";
         }
 
-        TypedQuery<Order> query = em.createQuery(jpql, Order.class);
-        query
-                .setMaxResults(1000);
-
+        TypedQuery<Order> query = em.createQuery(jpql, Order.class)
+                .setMaxResults(1000); //최대 1000건
         if (orderSearch.getOrderStatus() != null) {
             query = query.setParameter("status", orderSearch.getOrderStatus());
         }
         if (StringUtils.hasText(orderSearch.getMemberName())) {
             query = query.setParameter("name", orderSearch.getMemberName());
         }
-
         return query.getResultList();
-
     }
 
-   /**
-     * JPA Criteria
-     * JPA가 제공하는 표준으로 제공하는 동적 쿼리작성법 */
+        /**
+          * JPA Criteria
+          * JPA가 제공하는 표준으로 제공하는 동적 쿼리작성법 */
     public List<Order> findAllByCriteria(OrderSearch orderSearch) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Order> cq = cb.createQuery(Order.class);

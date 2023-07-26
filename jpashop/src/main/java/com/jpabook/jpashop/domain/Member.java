@@ -18,7 +18,6 @@ public class Member {
     @Column(name = "member_id")
     //DB의 테이블에서 해당 Entity의 컬럼이름을 지정 , 여기서는 member_id로 해당 컬럼과 매핑
     private Long id;
-
     private String name;
 
     @Embedded

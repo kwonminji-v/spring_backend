@@ -38,12 +38,9 @@ public class MemberController {
     public String create(@Valid MemberForm form, BindingResult result) { // BindingResult에 에러 확인이 가능함
 
         /** 이름을 입력하지 않은 채로 submit하게 되면 MemberForm에 NotEmpty 메세지로 적어두었던 message가 출력되고
-         * post메서드로 전송시도는 되었으나, 다시 createMemberForm으로 돌아가게 됨*/        /** 이름을 입력하지 않은 채로 submit하게 되면 MemberForm에 NotEmpty 메세지로 적어두었던 message가 출력되고
-         * post메서드로 전송시도는 되었으나, 다시 createMemberForm으로 돌아가게 됨*/        /** 이름을 입력하지 않은 채로 submit하게 되면 MemberForm에 NotEmpty 메세지로 적어두었던 message가 출력되고
          * post메서드로 전송시도는 되었으나, 다시 createMemberForm으로 돌아가게 됨*/
         if (result.hasErrors()) {
             return "members/createMemberForm";
-
         }
         
         Address address = new Address(form.getCity(), form.getStreet(), form.getZipcode());

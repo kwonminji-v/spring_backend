@@ -1,13 +1,11 @@
 package com.jpabook.jpashop.service;
 
-import com.jpabook.jpashop.domain.Delivery;
-import com.jpabook.jpashop.domain.Member;
-import com.jpabook.jpashop.domain.Order;
-import com.jpabook.jpashop.domain.OrderItem;
+import com.jpabook.jpashop.domain.*;
 import com.jpabook.jpashop.item.Item;
 import com.jpabook.jpashop.repository.ItemRepository;
 import com.jpabook.jpashop.repository.MemberRepository;
 import com.jpabook.jpashop.repository.OrderRepository;
+import com.jpabook.jpashop.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +32,7 @@ public class OrderService {
         /**배송 정보 생성  */
         Delivery delivery = new Delivery();
         delivery.setAddress(member.getAddress());
+        //delivery.setStatus(DeliveryStatus.READY);
         //회원의 주소지에 있는 값으로 배송을 하도록 delivery의 address 값을 member.getAddress로 저장
         //실제로는 입력된 배송 정보가 입력되지만 간단한 예제를 위해 작성
 
@@ -60,7 +59,7 @@ public class OrderService {
     }
 
     //검색
-/*    public List<Order> findOrders(OrderSearch orderSearch) {
-        return orderRepository.findAll(orderSearch);
-    }*/
+    public List<Order> findOrders(OrderSearch orderSearch) {
+        return orderRepository.findAllByString(orderSearch);
+    }
 }
