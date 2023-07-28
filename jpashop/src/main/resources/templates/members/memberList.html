@@ -13,6 +13,7 @@
                 <th>도시</th>
                 <th>주소</th>
                 <th>우편번호</th>
+                <th> </th>
             </tr>
             </thead>
             <tbody>
@@ -22,9 +23,13 @@
                 <td th:text="${member.address?.city}"></td> <!--?문법으로 th에서 address가 null 값이면 뒤의 불러와야 하는 값을 부르지 않고 더이상 진행하지 않음 -->
                 <td th:text="${member.address?.street}"></td>
                 <td th:text="${member.address?.zipcode}"></td>
+                <td>
+                    <a href="#" class="btn btn-primary" role="button">삭제하기</a>
+                </td>
             </tr>
             </tbody>
         </table>
+        <a style="margin-left: 640px" href="/" class="btn btn-primary" role="button">HOME</a>
     </div>
     <div th:replace="fragments/footer :: footer" />
 </div>
