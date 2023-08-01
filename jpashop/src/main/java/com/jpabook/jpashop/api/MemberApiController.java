@@ -26,15 +26,17 @@ public class MemberApiController {
 
     @GetMapping("/api/v2/members")
     public Result memberV2() {
-        List<Member> findmembers = memberService.findMembers();
-        List<MemberDto> collect = findmembers.stream().map(m -> new MemberDto(m.getName()))
+        List<Member> findMembers = memberService.findMembers();
+        //엔티티 -> DTO 변환
+        List<MemberDto> collect = findMembers.stream().map(m -> new MemberDto(m.getName()))
                 .collect(Collectors.toList());
-        return new Result(collect);
+        return new Result(collect.size(), collect);
     }
 
     @Data
     @AllArgsConstructor
     static class Result<T> {
+        private int count; //
         private T date;
     }
 
@@ -85,6 +87,7 @@ public class MemberApiController {
     static class CreateMemberRequest {
         private String name;
     }
+    //보여주고 싶은 데이터(name)만 보여줌
     @Data
     static class CreateMemberResponse {
         private Long id;
