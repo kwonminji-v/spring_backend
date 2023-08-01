@@ -22,9 +22,11 @@ public class MemberService {
     @Transactional
     public Long join(Member member) {
 
-        validateDuplicateMember(member); //중복 회원 검증 검증 후 문제가 없다면 save가 실행되고, return 값으로 해당 id를 member에 전달
+        validateDuplicateMember(member); //중복 회원 검증 검증 후 문제가 없다면 save가 실행되고,
+                                        // return 값으로 해당 id를 member에 전달
         memberRepository.save(member);
         return member.getId();
+
     }
 
     //기본적인 중복값 검증을 위한 메서드
@@ -50,4 +52,12 @@ public class MemberService {
     }
 
 
+    @Transactional
+    public void update(Long id, String name) {
+
+        Member member = memberRepository.findOne(id);
+        member.setName(name);
+    }
+    /** 트랜잭션이 시작이 되며 jpa가 영속성 컨텍스트에서 id를 DB에서 가져와 DB에서 영속성 컨텍스트 member올린 것을 반환해주고,
+     * 영속상태의 member를 setName으로 이름을 변경해주면 종료와 동시에 Commit이 되며, jpa가 플러쉬 하고 DB가 커밋 됩니다.   */
 }

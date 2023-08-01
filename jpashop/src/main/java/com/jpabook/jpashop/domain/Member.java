@@ -1,5 +1,6 @@
 package com.jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -27,6 +28,7 @@ public class Member {
     //객체를 값 타입으로 포함함을 명시 / Address 클래스는 별도의 테이블이 아니라 Member테이블에 포함되는 값 타임으로 사용
     private Address address;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "member")
     //회원과 주문 Entity간의 관계를 나타내주는 어노테이션
     //mappedBy 속성은 주인이 되는 쪽의 연관관계를 지정해주며, 여기서는 order Entity 클래스의 member 필드와
