@@ -61,7 +61,6 @@ public class OrderApiController {
             return result;
         }
 
-
         /** 4.static class OrderDto { ... }: OrderDto는 Order 엔티티의 정보를 가지고 필요한 정보만을 선택하여 DTO(Data Transfer Object)로 표현하는 클래스입니다.
          * DTO는 엔티티의 정보를 외부로 전달할 때 사용되며, API 응답 등에서 엔티티의 데이터를 노출하지 않고 필요한 정보만 전달하는 데 유용합니다. */
         @Data
@@ -104,6 +103,24 @@ public class OrderApiController {
                 orderPrice = orderItem.getOrderPrice();
                 count = orderItem.getCount();
             }
+        }
+        @GetMapping("/api/v3/orders")
+        public List<OrderDto> ordersV3() {
+
+            List<Order> orders = orderRepository.findAllWithItems();
+
+
+            for (Order order : orders) {
+                System.out.println("order ref = " + order + "id = " + order.getId());
+            }
+
+            List<OrderDto> result = orders.stream()
+                    .map(o -> new OrderDto(o))
+                    .collect(Collectors.toList());
+
+
+            return result;
+
         }
 }
 
