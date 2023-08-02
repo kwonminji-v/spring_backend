@@ -3,6 +3,7 @@ package com.jpabook.jpashop.repository;
 
 
 import com.jpabook.jpashop.domain.Order;
+import com.jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
@@ -27,10 +28,13 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
+
+    
     public List<Order> findAllByString(OrderSearch orderSearch) {
         //language=JPAQL
         String jpql = "select o From Order o join o.member m";
         boolean isFirstCondition = true;
+
         //주문 상태 검색
         if (orderSearch.getOrderStatus() != null) {
             if (isFirstCondition) {
@@ -41,6 +45,7 @@ public class OrderRepository {
             }
             jpql += " o.status = :status";
         }
+
         //회원 이름 검색
         if (StringUtils.hasText(orderSearch.getMemberName())) {
             if (isFirstCondition) {
@@ -62,6 +67,7 @@ public class OrderRepository {
         }
         return query.getResultList();
     }
+
 
         /**
           * JPA Criteria
@@ -89,13 +95,20 @@ public class OrderRepository {
         TypedQuery<Order> query = em.createQuery(cq).setMaxResults(1000);
         return query.getResultList();
     }
+
+
+
+
+    /**Order를 조회하는데,member와 delivery를 한번의 쿼리만으로 조인한 후 select절로 작성하여 한번에 불러오기 위함 */
+        public List<Order> findAllWithMemberDelivery() {
+            return em.createQuery(
+                            "select o from Order o" +
+                                    " join fetch o.member m" +
+                                    " join fetch o.delivery d", Order.class)
+                    .getResultList();
+
+
+        }
+
 }
 
-
- /* return em.createQuery("select o from Order o join o.member m" +
-                        " where o.status = :status " +
-                        "and m.name like :name", Order.class).setParameter("status", orderSearch.getOrderStatus())
-                .setParameter("name", orderSearch.getMemberName())
-                .setFirstResult(100) //페이징에서의 시작 페이지 지정
-                .setMaxResults(1000) //페이징에서의 최대로 출력할 값의 수량 - 최대 1000건
-                .getResultList();*/
