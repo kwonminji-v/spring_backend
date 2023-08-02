@@ -25,6 +25,7 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    // 지연로딩이면 진짜 Member 객체를 안끌고 오고, Order의 데이터만 가져옴. 즉, Member를 상속받아서 proxy Member 객체를 생성해서 넣어둔다.
     @JoinColumn(name = "member_id")
     private Member member;
 

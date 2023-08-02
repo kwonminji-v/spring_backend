@@ -22,47 +22,79 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class InitDb {
 
+    private final InitService initService;
+
+
+    public void init() {
+        initService.dbInit1();
+        initService.dbInit2();
+        /**애플리케이션 로딩 시점에 호출*/
+    }
+
+
     @Component
     @Transactional
     @RequiredArgsConstructor
     static class InitService { /** static 클래스를 만든 후 entityManager를 가지고 샘플데이터를 생성*/
 
-        private final InitService initService;
-
-
-        @PostConstruct
-        public void init() {
-            initService.dbInit1();
-            /**애플리케이션 로딩 시점에 호출*/
-        }
-
-
         private final EntityManager em;
         /** dbinit1 메서드에 Member객체를 호출한 후 , 데이터를 저장*/
         public void dbInit1() {
-            Member member = new Member();
-            member.setName("userA");
-            member.setAddress(new Address("서울","28","111-256"));
+            Member member = createMember("userA","서울","1","2222");
             em.persist(member); //member를 영속상태로 만듬
 
-            Book book1 = new Book();
-            book1.setName("JPA1 Book");
-            book1.setPrice(10000);
-            book1.setStockQuantity(100);
+            Book book1 = createBook("JPA1 BOOK", 10000, 100);
             em.persist(book1);
 
-            Book book2 = new Book();
-            book2.setName("JPA2 Book");
-            book2.setPrice(20000);
-            book2.setStockQuantity(100);
+            Book book2 = createBook("JPA2 BOOK", 20000, 100);
             em.persist(book2);
 
             OrderItem orderItem1 = OrderItem.createOrderItem(book1, 10000, 1);
             OrderItem orderItem2 = OrderItem.createOrderItem(book2, 20000, 2);
 
+            Delivery delivery = createDelivery(member);
+            Order order = Order.createOrder(member, delivery, orderItem1, orderItem2);
+            em.persist(order);
+        }
+
+
+        public void dbInit2() {
+            Member member = createMember("userB", "진주", "2","7777");
+            em.persist(member); //member를 영속상태로 만듬
+
+            Book book1 = createBook("SPRING1 BOOK", 20000, 200);
+            em.persist(book1);
+
+            Book book2 = createBook("SPRING2 BOOK", 40000, 300);
+            em.persist(book2);
+
+            OrderItem orderItem1 = OrderItem.createOrderItem(book1, 20000, 3);
+            OrderItem orderItem2 = OrderItem.createOrderItem(book2, 40000, 4);
+
+            Delivery delivery = createDelivery(member);
+            Order order = Order.createOrder(member, delivery, orderItem1, orderItem2);
+            em.persist(order);
+        }
+
+        private static Delivery createDelivery(Member member) {
             Delivery delivery = new Delivery();
             delivery.setAddress(member.getAddress());
-            Order.createOrder(member, delivery, orderItem1,orderItem2);
+            return delivery;
+        }
+
+        private static Book createBook(String s, int i, int stockQuantity) {
+            Book book1 = new Book();
+            book1.setName(s);
+            book1.setPrice(i);
+            book1.setStockQuantity(stockQuantity);
+            return book1;
+        }
+
+        private static Member createMember(String name, String city, String street, String zipcode) {
+            Member member = new Member();
+            member.setName(name);
+            member.setAddress(new Address(city,street,zipcode));
+            return member;
         }
     }
 
