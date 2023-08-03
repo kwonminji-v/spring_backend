@@ -12,8 +12,7 @@ import java.util.List;
 //@Component를 내장하고 있기때문에 해당 클래스를 전부 빈으로 자동 등록
 public class MemberRepository {
 
-    @PersistenceContext
-    //스프링 Entity 매니저를 주입해주는 어노테이션
+    @PersistenceContext //스프링 Entity 매니저를 주입해주는 어노테이션
     private EntityManager em;
 
     public void save(Member member) {

@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -104,6 +105,9 @@ public class OrderApiController {
                 count = orderItem.getCount();
             }
         }
+        /**
+         * Entity를 DTO로 변환하는 작업을 패치조인으로 최적화 하여 진행*/
+
         @GetMapping("/api/v3/orders")
         public List<OrderDto> ordersV3() {
 
@@ -121,6 +125,27 @@ public class OrderApiController {
 
             return result;
 
+        }
+
+        /**
+         * V3.1 엔티티를 조회해서 DTO로 변환 페이징 고려
+         * - ToOne 관계만 우선 모두 페치 조인으로 최적화
+         * - 컬렉션 관계는 hibernate.default_batch_fetch_size, @BatchSize로 최적화
+         */
+
+        @GetMapping("/api/v3.1/orders")
+        public List<OrderDto> ordersV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                                            @RequestParam(value = "limit", defaultValue = "100") int limit) {
+
+            //ToOne 관계인 Member와 Delivery와 페치조인한 결과만 호출하는 코드
+            //쿼리문을 살펴보면 한번에 Member와 Delivery가 같이 호출
+            List<Order> orders = orderRepository.findAllWithMemberDelivery(offset,limit);
+
+            List<OrderDto> result = orders.stream()
+                    .map(o -> new OrderDto(o))
+                    .collect(Collectors.toList());
+            //OrderDto가 반복되며 해당 order주문 별 item이 2개씩 들어있기 때문에 Order한번에 2개의 item 쿼리가 생성
+            return result;
         }
 }
 
