@@ -134,7 +134,7 @@ public class OrderApiController {
          */
 
         @GetMapping("/api/v3.1/orders")
-        public List<OrderDto> ordersV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
+        public List<OrderDto> ordersV3_page(@RequestParam(value = "offset" , defaultValue = "0") int offset,
                                             @RequestParam(value = "limit", defaultValue = "100") int limit) {
 
             //ToOne 관계인 Member와 Delivery와 페치조인한 결과만 호출하는 코드
@@ -148,6 +148,7 @@ public class OrderApiController {
             return result;
         }
 }
+
 
 
 
