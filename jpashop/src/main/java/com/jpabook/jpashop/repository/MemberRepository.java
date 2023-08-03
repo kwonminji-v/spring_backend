@@ -26,12 +26,12 @@ public class MemberRepository {
 
     public List<Member> findAll() {
         //createQuery메서드에 JPQL로 쿼리문을 입력해줍니다. SQL과 유사한데, from의 대상이 테이블이 아니라 Entity
-        return em.createQuery("select m from Member m", Member.class).getResultList();
+        return em.createQuery("select m from MemberJPA m", Member.class).getResultList();
     }
 
     //파라미터 바인딩으로 특정 이름으로 검색하는 것
     public List<Member> findByName(String name) {
-        return em.createQuery("select m from Member m where m.name = :name", Member.class)
+        return em.createQuery("select m from MemberJPA m where m.name = :name", Member.class)
                 .setParameter("name", name).getResultList();
     }
 

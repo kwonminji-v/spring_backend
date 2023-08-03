@@ -161,3 +161,4 @@ public class MemberApiController {
  * 두 번째 코드에서는 별도의 데이터 전송 객체인 CreateMemberRequest를 사용하여 필요한 데이터만 추출하여 Member 엔티티를 생성합니다.
  * 이를 통해 데이터 전송과 엔티티 매핑 간의 불필요한 의존성을 최소화하고, 코드의 유연성과 확장성을 높일 수 있습니다.
  * */
+
