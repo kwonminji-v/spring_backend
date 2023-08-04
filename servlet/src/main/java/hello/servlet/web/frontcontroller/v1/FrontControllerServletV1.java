@@ -19,8 +19,10 @@ import java.util.Map;
 public class FrontControllerServletV1 extends HttpServlet {
 
     /** 매핑정보 만들기
-     * -> Map<url, Controller>로 매핑 정보를 만듬
-     * 어떤 url을 호출하게되면 ContollerV1을 호출 */
+     * 어떤 url을 호출하게되면 ContollerV1을 호출
+     * controllerMap
+     * key: 매핑 URL
+     * value: 호출될 컨트롤러 */
     private Map<String ,ControllerV1> controllerMap = new HashMap<>();
 
     /** 매핑 정보를 생성할 때 미리 담기
@@ -38,8 +40,18 @@ public class FrontControllerServletV1 extends HttpServlet {
 
         //url 경로를 얻을 수 있습니다.예를들면, /front-controller/v1/members/new-form 해당 부분이 requestURI에 담김
         String requestURI = request.getRequestURI();
+
+        //다형성에 의해 ControllerV1을 구현하고 있어 부모 타입인 ControllerV1 타입으로 초기화가 가능
+        //ControllerV1 controller = new MemberListControllerV1();
+
         ControllerV1 controller = controllerMap.get(requestURI); //어떤 경로가 요청되냐에 따라서 이어진 객체 인스턴스가 반환됨 ex) /front-controller/v1/members/save 가 호출되면, new MemberSaveControllerV1()이게 호출
 
+        if(controller == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        controller.process(request, response);
 
 
 
