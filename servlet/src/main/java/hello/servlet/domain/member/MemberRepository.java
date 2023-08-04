@@ -21,9 +21,7 @@ public class MemberRepository {
     }
 
     //싱글톤으로 생성시에는 아무나 접근이 가능하지 않도록 private로 만들어 주어야 함
-    private MemberRepository() {
-
-    }
+    private MemberRepository() { }
 
     public Member save (Member member) {
         member.setId(++sequence);
