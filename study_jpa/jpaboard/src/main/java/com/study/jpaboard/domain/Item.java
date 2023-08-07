@@ -1,4 +1,4 @@
-package com.study.jpa.domain;
+package com.study.jpaboard.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

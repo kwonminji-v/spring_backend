@@ -1,4 +1,4 @@
-package com.study.jpa.domain;
+package com.study.jpaboard.domain;
 
 import java.time.LocalDateTime;
 
@@ -21,10 +21,17 @@ public class Order {
 	@Column(name = "MEMBER_ID")
 	private Long memberId;
 	
+	//private Member member;
+	
 	private LocalDateTime orderDate;
 	
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
+	
+	
+	/*
+	 * public Member getMember() { return member; }
+	 */
 
 	public Long getId() {
 		return id;
