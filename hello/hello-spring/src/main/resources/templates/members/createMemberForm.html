@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+</head>
+<body>
+<div class="container">
+
+  <form action = "/members/new" method="post">
+    <div class="form-group">
+      <label for="name"> 이름 </label>
+      <!-- input 태그에 값을 입력한 후 등록하기를 누르게 되면 name이라는 키와 입력된 값(value)가 스프링으로 넘어가게 됩니다.-->
+      <input type = "text" id="name" name="name" placeholder="이름을 입력하세요">
+    </div>
+    <button type="submit">회원 등록</button>
+  </form>
+
+</div><!--container의 끝 -->
+</body>
+</html>

@@ -1,0 +1,8 @@
+package com.study.jpa.domain;
+
+
+
+public enum OrderStatus {
+
+	ORDER, CANCLE
+}
