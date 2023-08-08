@@ -7,6 +7,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
+import java.util.List;
+
 @SpringBootApplication
 public class JpaApplication {
 
@@ -17,19 +19,31 @@ public class JpaApplication {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
-		
-		try {
 	
+
+		try {
+
 			Team team = new Team();
 			team.setName("TeamA");
+			//team.getMembers().add(member);
 			em.persist(team);
 			
 			Member member = new Member();
 			member.setUsername("회원 1");
-			member.setTeamId(team.getId()); //회원 1을 TeamA에 소속시키고자 함
+			member.setTeam(team);
 			em.persist(member);
-			
-			
+
+
+			//em.flush();
+			//em.clear();
+
+			Team findTeam = em.find(Team.class, team.getId());
+			List<Member> members = findTeam.getMembers();
+
+			for (Member m : members) {
+				System.out.println("m = " + m.getUsername());
+			}
+
 			tx.commit();
 			
 		} catch (Exception e) {
