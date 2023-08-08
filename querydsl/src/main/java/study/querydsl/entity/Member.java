@@ -22,6 +22,14 @@ public class Member {
     @JoinColumn(name = "team_id") //외래 키 이름!
     private Team team;
 
+    public Member(String username) {
+        this(username,0,null);
+    }
+
+    public Member(String username, int age) {
+        this(username, age, null);
+    }
+
     public Member(String username, int age, Team team) {
         this.username = username;
         this.age = age;
