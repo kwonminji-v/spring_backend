@@ -1,5 +1,7 @@
 package com.study.jpaboard;
 
+import com.study.jpaboard.domain.Order;
+import com.study.jpaboard.domain.OrderItem;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import jakarta.persistence.EntityManager;
@@ -19,7 +21,17 @@ public class JpaboardApplication {
 		tx.begin();
 		
 		try {
-			
+
+			Order order = new Order();
+			em.persist(order);
+
+			OrderItem orderItem = new OrderItem();
+			orderItem.setOrder(order);
+			em.persist(orderItem);
+
+
+			//order.addOrderItem(new OrderItem());
+
 			
 			tx.commit();
 			

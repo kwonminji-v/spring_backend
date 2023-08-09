@@ -1,10 +1,10 @@
 
 package com.study.jpaboard.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 
@@ -12,7 +12,6 @@ import jakarta.persistence.Table;
 public class Member {
 
 	@Id
-
 	@GeneratedValue
 	private Long id;
 
@@ -20,6 +19,9 @@ public class Member {
 	private String city;
 	private String street;
 	private String zipcode;
+
+	@OneToMany(mappedBy = "member")
+	private List<Order> orders = new ArrayList<>();
 
 	public Long getId() {
 		return id;
