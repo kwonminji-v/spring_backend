@@ -3,13 +3,7 @@ package com.study.jpa;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
 
 @Entity
 
@@ -24,10 +18,12 @@ public class Team {
 	@GeneratedValue(strategy = GenerationType. SEQUENCE, generator = "TEAM_SEQ_GENERATOR")
 	@Column(name = "TEAM_id")
 	private Long id;
+
+	@Column(name = "USERNAME")
 	private String name;
 	
-	@OneToMany(mappedBy = "team") //mappedBy : 일대다 매핑에서 어던 객체와 연결되어 있는지 (반대편 방향을 의미) 알려주는 어노테이션
-	//team으로 매핑이 되어있음을 의미
+	@OneToMany
+	@JoinColumn(name = "TEAM_ID")
 	private List<Member> members = new ArrayList<>();
 
 	public Long getId() {

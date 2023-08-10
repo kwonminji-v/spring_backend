@@ -1,14 +1,7 @@
 
 package com.study.jpa;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.*;
 
 /*
  * @TableGenerator(name = "MEMBER_SEQ_GENERATOR", table = "MY_SEQUENCES", // 매핑할
@@ -24,7 +17,11 @@ public class Member {
 
 	@Column(name = "USERNAME")
 	private String username;
-	
+
+	@OneToOne
+	@JoinColumn(name = "LOCKER_ID")
+	private Locker locker;
+
 	@ManyToOne //Member가 N , Team은 1 (1개의 팀에 여러 member가 소속)
 	@JoinColumn(name = "TEAM_ID") //어떤 컬럼과 조인할 지 (Team과 Member 테이블의 TEAM_ID(FK)를 매핑)
 	private Team team;
@@ -43,14 +40,6 @@ public class Member {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public Team getTeam() {
-		return team;
-	}
-
-	public void setTeam(Team team) {
-		this.team = team;
 	}
 
 

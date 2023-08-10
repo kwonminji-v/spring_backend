@@ -6,6 +6,7 @@
     <persistence-unit name="hello">
 		<class>com.study.jpa.Member</class>
 		<class>com.study.jpa.Team</class>
+		<class>com.study.jpa.Locker</class>
         <properties>
             <!-- 필수 속성 -->
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

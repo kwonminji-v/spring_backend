@@ -30,7 +30,7 @@ public class JpaboardApplication {
 			em.persist(orderItem);
 
 
-			//order.addOrderItem(new OrderItem());
+			order.addOrderItem(new OrderItem());
 
 			
 			tx.commit();

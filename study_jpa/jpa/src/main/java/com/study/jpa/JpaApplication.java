@@ -23,26 +23,19 @@ public class JpaApplication {
 
 		try {
 
-			Team team = new Team();
-			team.setName("TeamA");
-			//team.getMembers().add(member);
-			em.persist(team);
-			
 			Member member = new Member();
-			member.setUsername("회원 1");
-			member.setTeam(team);
+			member.setUsername("MemberA");
+
 			em.persist(member);
 
+			//Team테이블에 아래 하단내용에 인서트 가능
+			Team team = new Team();
+			team.setName("TeamA");
 
-			//em.flush();
-			//em.clear();
+			//team테이블에 저장되지 않습니다! 팀테이블에 해당 내용의 외래키가 없기 때문에
+			team.getMembers().add(member);
 
-			Team findTeam = em.find(Team.class, team.getId());
-			List<Member> members = findTeam.getMembers();
-
-			for (Member m : members) {
-				System.out.println("m = " + m.getUsername());
-			}
+			em.persist(team);
 
 			tx.commit();
 			
