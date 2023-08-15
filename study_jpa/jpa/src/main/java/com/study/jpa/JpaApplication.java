@@ -23,19 +23,16 @@ public class JpaApplication {
 
 		try {
 
-			Member member = new Member();
-			member.setUsername("MemberA");
+			Movie movie = new Movie();
+			movie.setDirector("정우성");
+			movie.setActor("한효주");
+			movie.setName("무빙");
+			movie.setPrice(10000);
 
-			em.persist(member);
+			em.persist(movie);
 
-			//Team테이블에 아래 하단내용에 인서트 가능
-			Team team = new Team();
-			team.setName("TeamA");
-
-			//team테이블에 저장되지 않습니다! 팀테이블에 해당 내용의 외래키가 없기 때문에
-			team.getMembers().add(member);
-
-			em.persist(team);
+			em.flush();
+			em.clear();
 
 			tx.commit();
 			

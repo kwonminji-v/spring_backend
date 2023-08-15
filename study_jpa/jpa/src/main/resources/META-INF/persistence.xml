@@ -7,6 +7,10 @@
 		<class>com.study.jpa.Member</class>
 		<class>com.study.jpa.Team</class>
 		<class>com.study.jpa.Locker</class>
+		<class>com.study.jpa.Item</class>
+		<class>com.study.jpa.Album</class>
+		<class>com.study.jpa.Movie</class>
+		<class>com.study.jpa.Book</class>
         <properties>
             <!-- 필수 속성 -->
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
