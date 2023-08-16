@@ -7,6 +7,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootApplication
@@ -23,16 +24,9 @@ public class JpaApplication {
 
 		try {
 
-			Movie movie = new Movie();
-			movie.setDirector("정우성");
-			movie.setActor("한효주");
-			movie.setName("무빙");
-			movie.setPrice(10000);
-
-			em.persist(movie);
-
-			em.flush();
-			em.clear();
+			Member member = em.find(Member.class, 1L);
+			printMember(member);
+			//printMemberAndTeam(member);
 
 			tx.commit();
 			
@@ -46,5 +40,19 @@ public class JpaApplication {
 		emf.close();
 
 		}
-		
+
+	private static void printMember(Member member) {
+		System.out.println("member.getUsername() = " + member.getUsername());
 	}
+
+	private static void printMemberAndTeam(Member member) {
+
+		String username = member.getUsername();
+		System.out.println("username = " + username);
+
+		Team team = member.getTeam();
+		System.out.println("team.getName() = " + team.getName());
+
+	}
+
+}

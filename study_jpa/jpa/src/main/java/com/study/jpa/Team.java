@@ -6,16 +6,11 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
-
-@SequenceGenerator(name = "TEAM_SEQ_GENERATOR", 
-					sequenceName = "TEAM_SEQ", initialValue = 1, allocationSize = 1)
-
 // name=식별자 생성기 이름, sequenceName=DB에 등록될 시퀀스이름, initialValue=최초시작하는 수, allocationSize=증가하는수)
-public class Team {
+public class Team extends BaseEntity{
 	
 	
-	@Id 
-	@GeneratedValue(strategy = GenerationType. SEQUENCE, generator = "TEAM_SEQ_GENERATOR")
+	@Id
 	@Column(name = "TEAM_id")
 	private Long id;
 

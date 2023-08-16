@@ -1,7 +1,6 @@
 package com.study.jpaboard;
 
-import com.study.jpaboard.domain.Order;
-import com.study.jpaboard.domain.OrderItem;
+import com.study.jpaboard.domain.Member;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import jakarta.persistence.EntityManager;
@@ -22,27 +21,19 @@ public class JpaboardApplication {
 		
 		try {
 
-			Order order = new Order();
-			em.persist(order);
-
-			OrderItem orderItem = new OrderItem();
-			orderItem.setOrder(order);
-			em.persist(orderItem);
+			Member member = em.find(Member.class, 1L);
 
 
-			order.addOrderItem(new OrderItem());
-
-			
 			tx.commit();
-			
+
 		} catch (Exception e) {
 			tx.rollback();
 		}finally {
 			em.close();
 		}
-		
+
 		emf.close();
 
 		}
-		
+
 	}
