@@ -7,9 +7,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 @SpringBootApplication
 public class JpaApplication {
 
@@ -24,9 +21,20 @@ public class JpaApplication {
 
 		try {
 
-			Member member = em.find(Member.class, 1L);
-			printMember(member);
-			//printMemberAndTeam(member);
+			Member member = new Member();
+			member.setUsername("Hello");
+			
+			em.persist(member);
+			
+			em.flush();
+			em.clear();
+			
+			//proxy 지연 로딩을 시도
+			//Member findMember = em.find(Member.class, member.getId());
+			Member findMember = em.getReference(Member.class, member.getId());
+			System.out.println("findMember.getClass() = " + findMember.getClass());
+			System.out.println("findMember.Id = " + findMember.getId());
+			System.out.println("findMember.Username = " + findMember.getUsername());
 
 			tx.commit();
 			
@@ -40,19 +48,5 @@ public class JpaApplication {
 		emf.close();
 
 		}
-
-	private static void printMember(Member member) {
-		System.out.println("member.getUsername() = " + member.getUsername());
-	}
-
-	private static void printMemberAndTeam(Member member) {
-
-		String username = member.getUsername();
-		System.out.println("username = " + username);
-
-		Team team = member.getTeam();
-		System.out.println("team.getName() = " + team.getName());
-
-	}
 
 }
