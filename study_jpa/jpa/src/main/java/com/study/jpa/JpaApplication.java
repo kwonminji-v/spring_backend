@@ -21,26 +21,32 @@ public class JpaApplication {
 
 		try {
 
-			Member member = new Member();
-			member.setUsername("Hello");
-			
-			em.persist(member);
-			
+			Team team = new Team();
+			team.setName("teamA");
+			em.persist(team);
+
+			Member member1 = new Member();
+			member1.setUsername("Hello1");
+			member1.setTeam(team);
+			em.persist(member1);
+
 			em.flush();
 			em.clear();
-			
-			//proxy 지연 로딩을 시도
-			//Member findMember = em.find(Member.class, member.getId());
-			Member findMember = em.getReference(Member.class, member.getId());
-			System.out.println("findMember.getClass() = " + findMember.getClass());
-			System.out.println("findMember.Id = " + findMember.getId());
-			System.out.println("findMember.Username = " + findMember.getUsername());
+
+			Member m = em.find(Member.class, member1.getId());
+
+			System.out.println("m = " + m.getTeam().getClass());
+
+			System.out.println("==============");
+			m.getTeam().getName();
+			System.out.println("==============");
+
 
 			tx.commit();
 			
 		} catch (Exception e) {
-		    e.printStackTrace();//추가
 			tx.rollback();
+			e.printStackTrace();//추가
 		}finally {
 			em.close();
 		}

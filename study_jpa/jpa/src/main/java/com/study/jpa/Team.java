@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 public class Team extends BaseEntity{
 	
 	
-	@Id
+	@Id @GeneratedValue
 	@Column(name = "TEAM_id")
 	private Long id;
 
