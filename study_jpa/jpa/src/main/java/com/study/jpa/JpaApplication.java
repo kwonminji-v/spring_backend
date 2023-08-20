@@ -38,7 +38,7 @@ public class JpaApplication {
 			System.out.println("m = " + m.getTeam().getClass());
 
 			System.out.println("==============");
-			m.getTeam().getName();
+			System.out.println(m.getTeam().getName());
 			System.out.println("==============");
 
 
