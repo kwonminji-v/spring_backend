@@ -7,6 +7,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
+import java.util.List;
+
 @SpringBootApplication
 public class JpaApplication {
 
@@ -21,25 +23,21 @@ public class JpaApplication {
 
 		try {
 
-			Team team = new Team();
-			team.setName("teamA");
-			em.persist(team);
+			Child child1 = new Child();
+			Child child2 = new Child();
 
-			Member member1 = new Member();
-			member1.setUsername("Hello1");
-			member1.setTeam(team);
-			em.persist(member1);
+			Parent parent = new Parent();
+			parent.addChild(child1);
+			parent.addChild(child2);
+
+			em.persist(parent);
 
 			em.flush();
 			em.clear();
 
-			Member m = em.find(Member.class, member1.getId());
+			Parent findParent = em.find(Parent.class, parent.getId());
+			em.remove(findParent);
 
-			System.out.println("m = " + m.getTeam().getClass());
-
-			System.out.println("==============");
-			System.out.println(m.getTeam().getName());
-			System.out.println("==============");
 
 
 			tx.commit();

@@ -11,6 +11,8 @@
 		<class>com.study.jpa.Album</class>
 		<class>com.study.jpa.Movie</class>
 		<class>com.study.jpa.Book</class>
+		<class>com.study.jpa.Parent</class>
+		<class>com.study.jpa.Child</class>
         <properties>
             <!-- 필수 속성 -->
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
