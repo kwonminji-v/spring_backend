@@ -6,6 +6,9 @@ import java.util.List;
 
 import jakarta.persistence.*;
 
+import static jakarta.persistence.CascadeType.*;
+import static jakarta.persistence.FetchType.*;
+
 @Entity
 @Table(name="ORDERS")
 public class Order extends BaseEntity {
@@ -16,15 +19,15 @@ public class Order extends BaseEntity {
 	
 /*	@Column(name = "MEMBER_ID")
 	private Long memberId; 직접 매핑해주었으나 그럴 필요가 X */
-	@ManyToOne
+	@ManyToOne(fetch = LAZY)
 	@JoinColumn(name = "MEMBER_ID")
 	private Member member;
 
-	@OneToOne
+	@OneToOne(fetch = LAZY, cascade = ALL)
 	@JoinColumn(name = "DELIVERY_ID")
 	private Delivery delivery;
 
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order", cascade = ALL)
 	private List<OrderItem> orderItems = new ArrayList<>();
 
 	private LocalDateTime orderDate;
