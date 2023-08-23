@@ -23,12 +23,23 @@ public class JpaApplication {
 
 		try {
 
-			Member member = new Member();
-			member.setUsername("안녕반가워");
-			member.setHomeAddress(new Address("도시", "거리","번지수"));
-			member.setWorkPeriod(new Period());
+			Address address = new Address("city", "street", "100-1000");
 
-			em.persist(member);
+			Member member1 = new Member();
+			member1.setUsername("Member 1");
+			member1.setHomeAddress(address);
+			em.persist(member1);
+
+			Address copyAddress = new Address(address.getCity(), address.getStreet(), address.getZipcode());
+			Member member2 = new Member();
+			member2.setUsername("Member 2");
+			member2.setHomeAddress(copyAddress);
+			em.persist(member2);
+
+			member1.getHomeAddress().setCity("새로운 도시");
+			/**Setter를 제거함으로써 값 변경이 불가능해지며 side effect 발생을 막을 수 있습니다.
+			 * 컴파일 에러가 발생하며, 사전에 에러를 발견하여 수정할 수 있습니다. */
+
 
 			tx.commit();
 			
