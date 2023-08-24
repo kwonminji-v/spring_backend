@@ -36,7 +36,6 @@ public class JpaApplication {
 			member2.setHomeAddress(copyAddress);
 			em.persist(member2);
 
-			member1.getHomeAddress().setCity("새로운 도시");
 			/**Setter를 제거함으로써 값 변경이 불가능해지며 side effect 발생을 막을 수 있습니다.
 			 * 컴파일 에러가 발생하며, 사전에 에러를 발견하여 수정할 수 있습니다. */
 

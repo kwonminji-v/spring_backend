@@ -3,8 +3,20 @@ package com.study.jpa;
 public class ValueMain {
     public static void main(String[] args) {
 
-        Integer a = Integer.valueOf(10);
-        Integer b = a; // 이 땐, a의 value가 복사되어 넘어가는 것이 아니라 주소값(참조값)이 전달됩니다.
+        int a = 10;
+        int b = 10;
+
+        System.out.println("a == b = " + (a == b));
+
+
+
+        Address address1 = new Address("city", "street", "100-1000");
+        Address address2 = new Address("city", "street", "100-1000");
+
+        System.out.println("address2 == address1 = " + (address2 == address1));
+        //java에서는 == 비교 자체가 레퍼런스 (참조값)를 비교하는데, 내부의 value가 동일하더라도, 현재 인스턴스 자체가 다름으로 참조값이 다른것으로 인식됩니다.
+
+
 
         a = 20;
         System.out.println("a = " + a);
