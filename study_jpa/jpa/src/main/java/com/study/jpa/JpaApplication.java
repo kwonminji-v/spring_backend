@@ -7,7 +7,6 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
-import java.util.List;
 
 @SpringBootApplication
 public class JpaApplication {
@@ -23,21 +22,26 @@ public class JpaApplication {
 
 		try {
 
-			Address address = new Address("city", "street", "100-1000");
+			Member member = new Member();
+			member.setUsername("멤버 1");
+			member.setHomeAddress(new Address("도시1", "길거리1", "123-123"));
 
-			Member member1 = new Member();
-			member1.setUsername("Member 1");
-			member1.setHomeAddress(address);
-			em.persist(member1);
+			member.getFavoriteFoods().add("치킨");
+			member.getFavoriteFoods().add("바나나");
+			member.getFavoriteFoods().add("고기");
 
-			Address copyAddress = new Address(address.getCity(), address.getStreet(), address.getZipcode());
-			Member member2 = new Member();
-			member2.setUsername("Member 2");
-			member2.setHomeAddress(copyAddress);
-			em.persist(member2);
+			member.getAddressHistory().add(new Address("이전도시", "이전길거리", "이전번지"));
+			member.getAddressHistory().add(new Address("이전도시1", "이전길거리1", "이전번지1"));
+			em.persist(member);
 
-			/**Setter를 제거함으로써 값 변경이 불가능해지며 side effect 발생을 막을 수 있습니다.
-			 * 컴파일 에러가 발생하며, 사전에 에러를 발견하여 수정할 수 있습니다. */
+			em.flush();
+			em.clear();
+
+			System.out.println("==============시작==============");
+			Member findMember = em.find(Member.class, member.getId());
+
+
+			System.out.println("findMember = " + findMember);
 
 
 			tx.commit();

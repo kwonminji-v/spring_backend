@@ -3,7 +3,6 @@ package com.study.jpa;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -42,7 +41,21 @@ public class Member {
 	)
 	private List<Address> addressHistory = new ArrayList<>();
 
+	public Set<String> getFavoriteFoods() {
+		return favoriteFoods;
+	}
 
+	public void setFavoriteFoods(Set<String> favoriteFoods) {
+		this.favoriteFoods = favoriteFoods;
+	}
+
+	public List<Address> getAddressHistory() {
+		return addressHistory;
+	}
+
+	public void setAddressHistory(List<Address> addressHistory) {
+		this.addressHistory = addressHistory;
+	}
 
 	public Long getId() {
 		return id;
