@@ -4,6 +4,10 @@ package com.study.jpa;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /*
  * @TableGenerator(name = "MEMBER_SEQ_GENERATOR", table = "MY_SEQUENCES", // 매핑할
@@ -20,13 +24,16 @@ public class Member {
 	@Column(name = "USERNAME")
 	private String username;
 
-	//기간에 대한 공통설정
-	@Embedded
-	private Period workPeriod;
 
 	//주소에 대한 속성
 	@Embedded
 	private Address homeAddress;
+
+	private Set<String> favoriteFoods = new HashSet<>();
+
+	private List<Address> addressHistory = new ArrayList<>();
+
+
 
 	public Long getId() {
 		return id;
