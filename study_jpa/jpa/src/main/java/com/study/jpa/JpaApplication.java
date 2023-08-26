@@ -7,6 +7,9 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 
+import java.util.List;
+import java.util.Set;
+
 
 @SpringBootApplication
 public class JpaApplication {
@@ -40,6 +43,12 @@ public class JpaApplication {
 			System.out.println("==============시작==============");
 			Member findMember = em.find(Member.class, member.getId());
 
+			//ex. 도시1에서 도시2로 이사감
+			//아래와 같은 방식은 사용하면 XX
+			//findMember.getHomeAddress().setCity("도시2");
+			Address address = findMember.getHomeAddress();
+			findMember.setHomeAddress(new Address("도시2",address.getStreet(),address.getZipcode()
+			));
 
 			System.out.println("findMember = " + findMember);
 
