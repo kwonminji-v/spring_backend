@@ -33,15 +33,15 @@ public class JpaApplication {
 			member.getFavoriteFoods().add("바나나");
 			member.getFavoriteFoods().add("고기");
 
-			member.getAddressHistory().add(new Address("이전도시", "이전길거리", "이전번지"));
-			member.getAddressHistory().add(new Address("이전도시1", "이전길거리1", "이전번지1"));
+			member.getAddressHistory().add(new AddressEntity("이전도시", "이전길거리", "이전번지"));
+			member.getAddressHistory().add(new AddressEntity("이전도시1", "이전길거리1", "이전번지1"));
 			em.persist(member);
 
 			em.flush();
 			em.clear();
 
 			System.out.println("==============시작==============");
-			Member findMember = em.find(Member.class, member.getId());
+			//Member findMember = em.find(Member.class, member.getId());
 
 			//ex. 도시1에서 도시2로 이사감
 			//아래와 같은 방식은 사용하면 XX
@@ -55,10 +55,10 @@ public class JpaApplication {
 			findMember.getFavoriteFoods().add("떡볶이");*/
 
 			//주소지를 변경해보자
-			findMember.getAddressHistory().remove(new Address("이전도시", "이전길거리", "이전번지"));
-			findMember.getAddressHistory().add(new Address("새도시1","새길거리","새번지"));
-
-			System.out.println("findMember = " + findMember);
+//			findMember.getAddressHistory().remove(new AddressEntity("이전도시", "이전길거리", "이전번지"));
+//			findMember.getAddressHistory().add(new AddressEntity("새도시1","새길거리","새번지"));
+//
+//			System.out.println("findMember = " + findMember);
 
 
 			tx.commit();
